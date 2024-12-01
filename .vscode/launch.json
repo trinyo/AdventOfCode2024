@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/zoll/Dokumentumok/Advent of code2024/Day 1 - Part 2",
-      "program": "/home/zoll/Dokumentumok/Advent of code2024/Day 1 - Part 2/build/Debug/outDebug",
+      "cwd": ".",
+      "program": "build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
