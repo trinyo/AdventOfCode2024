@@ -1,28 +1,25 @@
 # 🎄 Advent of Code Solutions 🎄
 
-Welcome to my **Advent of Code** repository! This is where I document my journey through the Advent of Code challenges, an annual event of daily programming puzzles during December.
+Welcome to my **Advent of Code** repository! This is where I document my solutions to the Advent of Code challenges, organized using Git branches for each puzzle part.
 
 ## 📅 About Advent of Code
-Advent of Code is an advent calendar of programming puzzles. Each day from December 1st to December 25th, a new two-part puzzle is unlocked. It's a great way to:
-- Improve your coding skills.
-- Explore new algorithms and data structures.
-- Have fun with puzzles!
+Advent of Code is an annual series of programming puzzles. From December 1st to December 25th, a new two-part puzzle is released each day. It’s a fun way to:
+- Sharpen programming skills.
+- Explore new problem-solving techniques.
+- Get into the holiday spirit! 🎅
 
-Visit the official [Advent of Code website](https://adventofcode.com) to learn more and join in!
+Check it out on the [Advent of Code website](https://adventofcode.com).
 
-## 🛠️ Languages and Tools
-This repository contains solutions written in:
-- c++
-- Other tools or libraries: none
+## 🛠️ Repository Organization
+Each day's puzzle is split into branches:
+- **`Day-X-Part-Y`**: Solutions for individual parts of each day.
+- **`main`**: May include general resources or a summary of progress.
 
-## 📂 Repository Structure
-The solutions are organized by day:
-- Each folder contains:
-  - **`part1`** and **`part2`**: Solutions for the day's puzzles.
-  - **`input.txt`**: Puzzle input provided for the day.
+Example branch names:
+- `Day-1-Part-1`
+- `Day-1-Part-2`
+- `Day-2-Part-1`
 
-## 🚀 How to Run
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/your-username/advent-of-code.git
-   cd advent-of-code
+To switch to a branch:
+```bash
+git checkout Day-X-Part-Y
