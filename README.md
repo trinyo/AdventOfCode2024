@@ -12,8 +12,8 @@ Visit the official [Advent of Code website](https://adventofcode.com) to learn m
 
 ## 🛠️ Languages and Tools
 This repository contains solutions written in:
-- [Your Preferred Language(s), e.g., Python, JavaScript, etc.]
-- Other tools or libraries: [Add if applicable, e.g., NumPy, pandas]
+- c++
+- Other tools or libraries: none
 
 ## 📂 Repository Structure
 The solutions are organized by day:
