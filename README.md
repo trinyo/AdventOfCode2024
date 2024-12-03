@@ -17,3 +17,12 @@ This repository contains solutions written in:
 
 ## 📂 Repository Structure
 The solutions are organized by day:
+- Each folder contains:
+  - **`part1`** and **`part2`**: Solutions for the day's puzzles.
+  - **`input.txt`**: Puzzle input provided for the day.
+
+## 🚀 How to Run
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-username/advent-of-code.git
+   cd advent-of-code
