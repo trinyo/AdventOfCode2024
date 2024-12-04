@@ -26,7 +26,7 @@ int main() {
     return 1;
   }
 
-  std::regex pattern(R"(mul\([0-9]+,[0-9]+\))");
+  std::regex pattern(R"(\b(mul\(\d+,\d+\)|don't\(\)|do\(\)))");
   std::smatch match;
   std::vector<std::string> matches; // To store all matches
 
@@ -41,8 +41,18 @@ int main() {
 
   // Split and calculate multiplication
   int sum = 0;
-
+  bool ifdont = false;
   for (const auto &multi : matches) {
+
+    if (multi == "do()") {
+      ifdont = false;
+    }
+    if (multi == "don't()") {
+      ifdont = true;
+    }
+    if (ifdont)
+      continue;
+
     std::string inner =
         multi.substr(4, multi.length() - 5); // Extract inner content
     std::vector<std::string> splited = splitstring(inner, ',');
