@@ -1,108 +1,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
-int compar(const void *a, const void *b) {
-  return strcmp(*(const char **)a, *(const char **)b); // Compare the strings
+// function for splitting strings
+char **splitString(char *str, const char *delimiter) {
+  char **splittedWord = (char **)malloc(sizeof(char *));
+  char *token;
+  token = strtok(str, delimiter);
+  // Loop to get the remaining tokens
+  int counter = 0;
+  while (token != NULL) {
+    if (splittedWord[counter] == NULL) {
+      splittedWord = realloc(splittedWord, sizeof(char *) * (counter + 1));
+      if (splittedWord == NULL) {
+        printf("%s", "Memory allocation failed!1");
+        exit(1);
+      }
+    }
+    splittedWord[counter] = token;
+    ++counter;
+    token = strtok(NULL, delimiter); // Get the next token
+  }
+  return splittedWord;
 }
+// function for comparing
+int compare(const void *a, const void *b) {
+  // Cast the void pointers to integers
+  int num1 = *(int *)a;
+  int num2 = *(int *)b;
 
+  // Return the difference for sorting in ascending order
+  return num1 - num2;
+}
 int main() {
-  FILE *fptr = fopen("input.txt", "r");
-  if (fptr == NULL) {
-    perror("Failed to open file");
-    return 1;
-  }
+  FILE *inputFile = fopen("input.txt", "r");
+  char *lineptr;
+  size_t n;
 
-  char *lineptr = NULL;
-  size_t n = 0;
-  int sizeOfTheArrays = 0;
-  size_t longestItem = 0;
+  int *numbers1 = malloc(sizeof(int));
+  int *numbers2 = malloc(sizeof(int));
 
-  // First pass to determine the size of arrays and the longest token
-  while (getline(&lineptr, &n, fptr) != -1) {
-    ++sizeOfTheArrays;
-    char *token;
-    char delimiter[] = " ";
-    token = strtok(lineptr, delimiter);
+  int counter = 0;
+  while (getline(&lineptr, &n, inputFile) != -1) {
+    char **splittedLine = splitString(lineptr, " ");
 
-    while (token != NULL) {
-      // Update the longest item length if necessary
-      if (strlen(token) > longestItem) {
-        longestItem = strlen(token);
-      }
-      token = strtok(NULL, delimiter);
+    numbers1 = realloc(numbers1, sizeof(int) * (counter + 1));
+    numbers2 = realloc(numbers2, sizeof(int) * (counter + 1));
+
+    if (numbers1 == NULL) {
+      printf("%s", "Memory allocation failed!2");
+      exit(1);
     }
+    numbers1[counter] = atoi(splittedLine[0]);
+    numbers2[counter] = atoi(splittedLine[1]);
+
+    ++counter;
   }
+  free(inputFile);
+  free(lineptr);
 
-  // Allocate memory for list1 and list2 dynamically
-  char **list1 = malloc(sizeOfTheArrays * sizeof(char *));
-  char **list2 = malloc(sizeOfTheArrays * sizeof(char *));
-  for (int i = 0; i < sizeOfTheArrays; i++) {
-    list1[i] =
-        malloc((longestItem + 1) * sizeof(char)); // +1 for the null terminator
-    list2[i] =
-        malloc((longestItem + 1) * sizeof(char)); // +1 for the null terminator
-  }
-
-  // Reset the file pointer to read from the start of the file again
-  rewind(fptr);
-  int listIndex = 0;
-  int tokenIndex = 0;
-
-  // Second pass to split the lines and fill list1 and list2
-  while (getline(&lineptr, &n, fptr) != -1) {
-    char *token;
-    char delimiter[] = " ";
-    token = strtok(lineptr, delimiter);
-
-    while (token != NULL) {
-      if (strlen(token) <= longestItem) {
-        // Check if the token length fits within the allocated space
-        if (tokenIndex % 2 == 0) {
-          // If even index, copy to list1
-          strcpy(list1[listIndex], token);
-        } else {
-          // If odd index, copy to list2
-          strcpy(list2[listIndex], token);
-        }
-      } else {
-        // Token is too long, handle it (e.g., skip it)
-        fprintf(stderr,
-                "Warning: Token '%s' is too long and will be skipped.\n",
-                token);
-      }
-
-      token = strtok(NULL, delimiter);
-      tokenIndex++;
-    }
-    listIndex++;
-  }
-
-  // Length of the lists
-  size_t nmemb = sizeOfTheArrays; // The number of elements in list1 and list2
-
-  // Sort list1 and list2 using qsort
-  qsort(list1, nmemb, sizeof(char *), compar);
-  qsort(list2, nmemb, sizeof(char *), compar);
-
+  qsort(numbers1, counter, sizeof(int), compare);
+  qsort(numbers2, counter, sizeof(int), compare);
   int sum = 0;
-  for (int i = 0; i < sizeOfTheArrays; ++i) {
-    printf("%s - %s - %i\n", list1[i], list2[i], i);
-    sum += abs(atoi(list1[i]) - atoi(list2[i]));
+  for (int i = 0; i < counter; ++i) {
+    sum += abs(numbers1[i] - numbers2[i]);
   }
 
-  printf("The answer is: %d\n", sum);
-
-  // Free dynamically allocated memory
-  for (int i = 0; i < sizeOfTheArrays; i++) {
-    free(list1[i]);
-    free(list2[i]);
-  }
-  free(list1);
-  free(list2);
-
-  fclose(fptr);
-  free(lineptr); // Free the buffer allocated by getline
-  return 0;
+  printf("%s%i\n", "The result is: ", sum);
 }
