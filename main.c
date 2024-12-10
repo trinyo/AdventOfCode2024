@@ -42,73 +42,23 @@ int main() {
   int wordCounter = 0;
   for (int i = 0; i < maxRow; ++i) {
     for (int y = 0; y < maxColumn; ++y) {
-      if (lines[i][y] == 'X') {
-        // Diagonal up-left
-        if (i - 3 >= 0 && y - 3 >= 0) {
-          if (lines[i - 1][y - 1] == 'M' && lines[i - 2][y - 2] == 'A' &&
-              lines[i - 3][y - 3] == 'S') {
-            ++wordCounter;
-          }
-        }
-
-        // Diagonal up-right
-        if (i - 3 >= 0 && y + 3 < maxColumn) {
-          if (lines[i - 1][y + 1] == 'M' && lines[i - 2][y + 2] == 'A' &&
-              lines[i - 3][y + 3] == 'S') {
-            ++wordCounter;
-          }
-        }
-
-        // Diagonal down-left
-        if (i + 3 < maxRow && y - 3 >= 0) {
-          if (lines[i + 1][y - 1] == 'M' && lines[i + 2][y - 2] == 'A' &&
-              lines[i + 3][y - 3] == 'S') {
-            ++wordCounter;
-          }
-        }
-
-        // Diagonal down-right
-        if (i + 3 < maxRow && y + 3 < maxColumn) {
-          if (lines[i + 1][y + 1] == 'M' && lines[i + 2][y + 2] == 'A' &&
-              lines[i + 3][y + 3] == 'S') {
-            ++wordCounter;
-          }
-        }
-
-        // Horizontal left
-        if (y - 3 >= 0) {
-          if (lines[i][y - 1] == 'M' && lines[i][y - 2] == 'A' &&
-              lines[i][y - 3] == 'S') {
-            ++wordCounter;
-          }
-        }
-
-        // Horizontal right
-        if (y + 3 < maxColumn) {
-          if (lines[i][y + 1] == 'M' && lines[i][y + 2] == 'A' &&
-              lines[i][y + 3] == 'S') {
-            ++wordCounter;
-          }
-        }
-
-        // Vertical up
-        if (i - 3 >= 0) {
-          if (lines[i - 1][y] == 'M' && lines[i - 2][y] == 'A' &&
-              lines[i - 3][y] == 'S') {
-            ++wordCounter;
-          }
-        }
-
-        // Vertical down
-        if (i + 3 < maxRow) {
-          if (lines[i + 1][y] == 'M' && lines[i + 2][y] == 'A' &&
-              lines[i + 3][y] == 'S') {
-            ++wordCounter;
-          }
+      // boundary check
+      if (lines[i][y] == 'A' && i - 1 >= 0 && y - 1 >= 0 && i + 1 < maxRow &&
+          y + 1 < maxColumn && i + 1 < maxRow && y - 1 >= 0 && i - 1 >= 0 &&
+          y + 1 < maxColumn) {
+        // top-left and bottom-right
+        if ((((lines[i - 1][y - 1] == 'M' && lines[i + 1][y + 1] == 'S') ||
+              (lines[i - 1][y - 1] == 'S' && lines[i + 1][y + 1] == 'M'))) &&
+            // bottom-left and top-right
+            (((lines[i + 1][y - 1] == 'M' && lines[i - 1][y + 1] == 'S') ||
+              (lines[i + 1][y - 1] == 'S' && lines[i - 1][y + 1] == 'M')))) {
+          ++wordCounter;
         }
       }
     }
   }
+  free(lines);
+
   printf("%s%i", "The result is: ", wordCounter);
   return 0;
 }
